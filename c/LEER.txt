@@ -1,0 +1,13 @@
+######################
+
+usuarios:contraseñas
+
+######################
+
+admin:admin
+demo:demo
+
+######################
+
+Si al cargar la base de datos genera error, 
+crear una base de datos con el nombre "cms_grupo5" y luego importar el archivo "cms_grupo5.sql". 

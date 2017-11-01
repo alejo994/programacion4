@@ -1,0 +1,94 @@
+<!Doctype html>
+<html lang="es">
+  <head>
+    <title>Laboratorio Cms</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+  </head>
+<body background = "assets/img/portada_clash.jpg" >
+  <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="pr-wrap">
+            </div>
+            <div class="wrap">
+                <p class="form-title">
+                    Ingreso de usuario</p>
+                <form class="login">
+                <input type="text" placeholder="Usuario" id = "txtUsuario" />
+                <input type="password" placeholder="Contraseña" id = "txtPassword" />
+                <input type="submit" value="Ingresar" class="btn btn-success btn-sm" id = "btnProcesar" />
+                <div class="remember-forgot">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" />
+                                    Recuerdame
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 forgot-pass-content">
+                            <a href="javascript:void(0)" class="forgot-pass">Olvide mi contraseña</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="respuesta" class="alert alert-primary" role="alert">
+                    
+                  
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="assets/js/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/sha512.js"></script>
+
+    <script>
+     $(document).ready(function () {
+    $('.forgot-pass').click(function(event) {
+      $(".pr-wrap").toggleClass("show-pass-reset");
+    }); 
+    
+    $('.pass-reset-submit').click(function(event) {
+      $(".pr-wrap").removeClass("show-pass-reset");
+    }); 
+}); 
+
+        $("#btnProcesar").click(function(event){ //Agregamos un evento clic nuevo a nuestro boton procesar
+        event.preventDefault();
+        us = $("#txtUsuario").val();
+        pw = SHA512($("#txtPassword").val()); //Aqui utilizamos una funcion que se encuentra en nuestro archivo sha512.js
+
+        $.ajax({
+          method: 'post',
+          url: 'controllers/userController.php', //Este archivo procesara la informacion que enviemos 
+          data: {usuario:us, clave:pw},
+          success: function(data)
+          {
+            $("#respuesta").html(data);
+            
+            //Agregaremos aqui la validacion adicional
+            if(data=="Bienvenid@")
+            {
+              setTimeout(function(){location.href='ini.php'}, 3000) //Colocamos un temporizador que redigirÃ¡ nuestro ingreso a la pagina ini.php
+            }            
+          }
+          });
+        });
+
+    </script>
+
+  </body>
+</html>
